@@ -32,17 +32,18 @@
       url: 'https://192.168.1.114/owa/auth.owa',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
       },
       data : data
     };
     axios.request(config)
         .then((response) => {
           console.log(response);
+          window.location.href = "https://192.168.1.114/owa"
         })
         .catch((error) => {
           console.log(error);
         });
+    localStorage.clear();
   }
   else {
     console.log("not authenticated")
