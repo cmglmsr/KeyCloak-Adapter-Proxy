@@ -10,5 +10,5 @@ import authenticate from "./Routes/authenticate.js";
     const app = express();
     const server = app.listen(PORT, () => console.log(`[+] Backend server started on port ${PORT}`))
 
-    app.use("/root", authenticate, root)
+    app.use("/root", root)
 })()

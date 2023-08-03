@@ -13,28 +13,12 @@
 import { createApp } from 'vue'
 import App from '@/App.vue'
 import Keycloak from "keycloak-js";
+import store from './store.js'
+import router from './router';
 import axios from 'axios'
 
-let initOptions = {
-    url: 'http://localhost:8080', realm: 'Vuejs-Realm', clientId: 'Vuejs-Client', onLoad:'login-required'
-}
+const app = createApp(App);
+app.use(router);
+app.use(store);
 
-let keycloak = new Keycloak(initOptions)
-
-keycloak.init({onLoad: 'login-required'}).then((auth) => {
-    if(!auth) {
-        console.error("[-] Error during authentication.")
-    }
-    else {
-        console.log("[+] User successfully authenticated.")
-        const config = {
-            headers: {
-                authorization: `Bearer ${keycloak.token}`,
-            },
-        };
-        axios.get("/root", config).then((res) => console.log(res))
-        console.log(keycloak.loadUserInfo())
-    }
-})
-
-createApp(App).mount('#app')
+app.mount('#app')

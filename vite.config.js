@@ -11,6 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/root": "http://127.0.0.1:5000/",
+      "/auth": "http://localhost:8080/realms/Vuejs-Realm/protocol/openid-connect/token"
     },
   },
   resolve: {

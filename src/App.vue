@@ -3,13 +3,13 @@
 </script>
 
 <template>
-  <header>
-    <div>
-      <h1>
-        Proxy root
-      </h1>
-    </div>
-  </header>
+
+  <router-view>
+
+  </router-view>
 
 </template>
 
+<style scoped>
+
+</style>
