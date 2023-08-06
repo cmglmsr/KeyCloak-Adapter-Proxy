@@ -17,7 +17,7 @@
   if(store.getters.getToken) {
     console.log("user is authenticated")
     let data = qs.stringify({
-      'destination': 'https://192.168.1.114/owa/',
+      'destination': 'https://192.168.1.150/owa/',
       'flags': '4',
       'forcedownlevel': '0',
       'username': 'windc.net\\cemg',
@@ -29,7 +29,7 @@
       method: 'post',
       withCredentials: true,
       maxBodyLength: Infinity,
-      url: 'https://192.168.1.114/owa/auth.owa',
+      url: 'https://192.168.1.150/owa/auth.owa',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -37,8 +37,8 @@
     };
     axios.request(config)
         .then((response) => {
-          console.log(response);
-          window.location.href = "https://192.168.1.114/owa"
+          console.log(response.headers);
+          window.location.href="https://192.168.1.150/owa"
         })
         .catch((error) => {
           console.log(error);
