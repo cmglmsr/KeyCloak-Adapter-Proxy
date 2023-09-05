@@ -14,14 +14,16 @@
   import axios from 'axios'
   import qs from 'qs'
 
+  const FRONTEND = "172.16.102.150"
+
   if(store.getters.getToken) {
     console.log("user is authenticated")
     let data = qs.stringify({
-      'destination': 'https://192.168.1.150/owa/',
+      'destination': 'https://' + FRONTEND +'/owa/',
       'flags': '4',
       'forcedownlevel': '0',
-      'username': 'windc.net\\cemg',
-      'password': '12tr734!',
+      'username': 'windc.net\\' + store.getters.getUsername,
+      'password': store.getters.getPassword,
       'passwordText': '',
       'isUtf8': '1'
     });
@@ -29,7 +31,7 @@
       method: 'post',
       withCredentials: true,
       maxBodyLength: Infinity,
-      url: 'https://192.168.1.150/owa/auth.owa',
+      url: 'https://' + FRONTEND +'/owa/auth.owa',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -38,7 +40,7 @@
     axios.request(config)
         .then((response) => {
           console.log(response.headers);
-          window.location.href="https://192.168.1.150/owa"
+          window.location.href="https://"+FRONTEND+"/owa"
         })
         .catch((error) => {
           console.log(error);

@@ -19,7 +19,8 @@
 
 <script>
 import axios from 'axios'
-import store from './store.js'
+
+const FRONTEND = "172.16.102.150"
 export default {
   name: 'Login',
   data() {
@@ -38,7 +39,7 @@ export default {
         params.append('password', this.formData.password);
         params.append('grant_type', 'password')
         params.append('client_id', 'Vuejs-Client')
-        const response = await axios.post('https://192.168.1.150/realms/Vuejs-Realm/protocol/openid-connect/token', params, {
+        const response = await axios.post('https://' + FRONTEND + '/realms/Vuejs-Realm/protocol/openid-connect/token', params, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },

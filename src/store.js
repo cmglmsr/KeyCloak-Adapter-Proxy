@@ -1,6 +1,5 @@
 import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate'
-import Keycloak from "keycloak-js";
 
 export default createStore({
     state() {
