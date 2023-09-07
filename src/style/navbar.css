@@ -1,0 +1,46 @@
+.navbar {
+    background-color: #333;
+    display: flex;
+    border-radius: 5px;
+    padding: 10px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    margin-left: 150px;
+}
+li {
+    margin-right: 20px;
+}
+a {
+    text-decoration: none;
+    color: white;
+    position: relative;
+}
+
+.logo {
+    max-width: 10%;
+    height: auto;
+}
+
+.logo-div {
+    position: absolute;
+    padding: 10px;
+}
+
+a::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: royalblue;
+    transition: width 0.5s ease; /* Add transition for width */
+}
+
+a:hover::before {
+    width: 100%; /* Expand the underline on hover */
+    transition: width 0.6s ease; /* Slowly slide from left to right */
+}

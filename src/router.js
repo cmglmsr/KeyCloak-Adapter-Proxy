@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import store from './store';
 import Home from './Home.vue';
 import Login from './Login.vue';
+import Admin from "@/Admin.vue";
+import AdminLogin from "@/AdminLogin.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -20,17 +22,33 @@ const router = createRouter({
                 requiresAuth: false,
             },
         },
+        {
+            path: "/admin-login",
+            component: AdminLogin,
+            meta: {
+                requiresAuth: false,
+            }
+        },
+        {
+            path: "/*",
+            component: Login,
+            meta: {
+                requiresAuth: false,
+            }
+        }
     ],
 });
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
         if (!store.state.token) {
+            alert("You need to be authenticated first.")
             next('/login');
         } else {
             next();
         }
-    } else {
+    }
+    else {
         next();
     }
 });

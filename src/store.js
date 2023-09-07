@@ -6,7 +6,9 @@ export default createStore({
         return {
             token: null,
             username: null,
-            password: null
+            password: null,
+            domain: null,
+            adminToken: null
         };
     },
     mutations: {
@@ -18,6 +20,12 @@ export default createStore({
         },
         setPassword(state, newValue) {
             state.password = newValue;
+        },
+        setDomain(state, newValue) {
+            state.domain = newValue;
+        },
+        setAdminToken(state, newValue) {
+            state.adminToken = newValue;
         }
     },
     actions: {
@@ -34,7 +42,13 @@ export default createStore({
         },
         getPassword(state) {
             return state.password;
-        }
+        },
+        getDomain(state) {
+            return state.domain;
+        },
+        getAdminToken(state) {
+            return state.adminToken;
+        },
     },
     plugins: [
         createPersistedState({
