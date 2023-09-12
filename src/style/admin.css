@@ -1,5 +1,10 @@
 /* Style the unordered list (ul) */
-
+.message-container {
+    color: red;
+    position: relative;
+    text-align: center;
+    padding: 20px;
+}
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; /* Creates a 1x3 grid with equal-width columns */

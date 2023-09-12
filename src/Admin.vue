@@ -1,6 +1,6 @@
 <template>
   <div class="message-container">
-    <label style="color: red" v-if="err">Authentication expired: Login to continue.</label>
+    <label v-if="err">Authentication expired: Login to continue.</label>
   </div>
   <div class="grid-container">
     <div class="grid-item">
@@ -54,8 +54,13 @@ export default {
           'Authorization': 'Bearer '+ store.state.adminToken,
         }
       };
-      const response = await axios.request(config)
-      this.users = response.data;
+      try {
+        const response = await axios.request(config)
+        this.users = response.data;
+      } catch (err) {
+        console.log("err")
+        this.err = err
+      }
 
     },
 
@@ -68,8 +73,13 @@ export default {
           'Authorization': 'Bearer '+ store.state.adminToken,
         }
       };
-      const response = await axios.request(config)
-      this.clients = response.data;
+      try {
+        const response = await axios.request(config)
+        this.clients = response.data;
+      } catch (err) {
+        console.log("err")
+        this.err = err
+      }
 
     },
 
@@ -87,6 +97,7 @@ export default {
         this.realms = response.data;
       } catch (err) {
         console.log("err")
+        this.err = err
       }
     },
 
