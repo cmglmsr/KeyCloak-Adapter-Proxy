@@ -1,25 +1,97 @@
 <template>
-  <AdminLogin></AdminLogin>
+  <div class="message-container">
+    <label style="color: red" v-if="err">Authentication expired: Login to continue.</label>
+  </div>
+  <div class="grid-container">
+    <div class="grid-item">
+      <button @click="getUsers">Fetch Users</button>
+      <ul class="data-list">
+        <li class="data-item">USERNAME</li>
+        <li class="data-item" v-for="user in this.users" :key="user.id">{{user.username}}</li>
+      </ul>
+    </div>
+    <div class="grid-item">
+      <button @click="getClients">Fetch Clients</button>
+      <ul class="data-list">
+        <li class="data-item">CLIENT</li>
+        <li class="data-item" v-for="client in this.clients" :key="client.id">{{client.clientId}}</li>
+      </ul>
+    </div>
+    <div class="grid-item">
+      <button @click="getRealms">Fetch Realms</button>
+      <ul class="data-list">
+        <li class="data-item">REALM</li>
+        <li class="data-item" v-for="realm in this.realms" :key="realm.id">{{realm.realm}}</li>
+      </ul>
+    </div>
+  </div>
+
 </template>
 
 <script>
 
-import store from "@/store.js";
-import axios from 'axios'
-import qs from 'qs'
-import {defineComponent} from "vue";
-import AdminLogin from "@/AdminLogin.vue";
+import store from "@/store.js"
+import axios from "axios";
 
-export default defineComponent({
-  components: {AdminLogin}
-})
+const FRONTEND = "172.16.102.150"
+export default {
+  name: 'Admin',
+  data() {
+    return {
+      err: null,
+      users: null,
+      clients: null,
+      realms: null,
+    }
+  },
+  methods: {
+    async getUsers() {
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://'+FRONTEND+'/admin/realms/Vuejs-Realm/users',
+        headers: {
+          'Authorization': 'Bearer '+ store.state.adminToken,
+        }
+      };
+      const response = await axios.request(config)
+      this.users = response.data;
 
+    },
 
-if(store.getters.getAdminToken) {
+    async getClients() {
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://'+FRONTEND+'/admin/realms/Vuejs-Realm/clients',
+        headers: {
+          'Authorization': 'Bearer '+ store.state.adminToken,
+        }
+      };
+      const response = await axios.request(config)
+      this.clients = response.data;
 
+    },
+
+    async getRealms() {
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://'+FRONTEND+'/admin/realms',
+        headers: {
+          'Authorization': 'Bearer '+ store.state.adminToken,
+        }
+      };
+      try {
+        const response = await axios.request(config)
+        this.realms = response.data;
+      } catch (err) {
+        console.log("err")
+      }
+    },
+
+  }
 }
-
-
 </script>
 
 <style scoped>

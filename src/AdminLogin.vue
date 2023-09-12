@@ -26,6 +26,7 @@
 <script>
   import axios from "axios";
   import store from "@/store.js"
+  import qs from "qs";
 
   const FRONTEND = "172.16.102.150"
 
@@ -44,18 +45,27 @@
     methods: {
       async submitForm() {
         try {
-          const params = new URLSearchParams();
-          params.append('username', this.formData.username);
-          params.append('password', this.formData.password);
-          params.append('grant_type', 'password')
-          params.append('client_id', 'admin-cli')
-          const response = axios.post('https://' + FRONTEND + '/realms/master/protocol/openid-connect/token', params, {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
+          let data = qs.stringify({
+            'username': this.formData.username,
+            'password': this.formData.password,
+            'client_id': 'admin-cli',
+            'grant_type': 'password'
           });
+
+          let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://' + FRONTEND + '/realms/master/protocol/openid-connect/token',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data : data
+          };
+          const response = await axios.request(config);
           console.log('[+] Admin login successful.')
-          store.commit('setAdminToken', response.access_token)
+          console.log(response.data.access_token)
+          this.$store.commit('setAdminToken', response.data.access_token)
+          location.replace("/admin")
         } catch (err) {
           console.error("[-] " + err)
           this.err = "Invalid user credentials."

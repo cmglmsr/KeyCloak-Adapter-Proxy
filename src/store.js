@@ -7,8 +7,8 @@ export default createStore({
             token: null,
             username: null,
             password: null,
+            adminToken: null,
             domain: null,
-            adminToken: null
         };
     },
     mutations: {

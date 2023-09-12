@@ -30,6 +30,13 @@ const router = createRouter({
             }
         },
         {
+            path: "/admin",
+            component: Admin,
+            meta: {
+                requiresAdminAuth: true,
+            }
+        },
+        {
             path: "/*",
             component: Login,
             meta: {
@@ -44,6 +51,14 @@ router.beforeEach((to, from, next) => {
         if (!store.state.token) {
             alert("You need to be authenticated first.")
             next('/login');
+        } else {
+            next();
+        }
+    }
+    else if(to.meta.requiresAdminAuth) {
+        if(!store.state.adminToken) {
+            alert("You need to be authenticated as an admin before accessing the admin panel.")
+            next("/admin-login")
         } else {
             next();
         }
